@@ -69,7 +69,7 @@ public class DateTime {
 		long convertToDays = HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTES * MILLISECONDS_IN_SECOND;
 		long hirePeriod = endDate.getTime() - startDate.getTime();
 		double difference = (double) hirePeriod / (double) convertToDays;
-		int round = (int) Math.round(difference);
+		int round = (int) Math.abs(Math.round(difference));
 		return round;
 	}
 

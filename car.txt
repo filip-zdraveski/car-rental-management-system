@@ -1,0 +1,6 @@
+car
+2007
+Ford
+Fiesta
+15
+4

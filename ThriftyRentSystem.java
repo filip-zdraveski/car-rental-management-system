@@ -1,5 +1,6 @@
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Scanner;
 
 /**
@@ -9,8 +10,8 @@ import java.util.Scanner;
 
 public class ThriftyRentSystem {
 	//cars and vans are two collections used to store cars of type Cars and vans of type Vans respectively
-	private Car cars[] = new Car[50];
-	private Van vans[] = new Van[50];
+	private final Car[] cars = new Car[50];
+	private final Van[] vans = new Van[50];
 
 	public static DateFormat format = new SimpleDateFormat("dd/MM/yyyy"); //Basic format expected from the User
 
@@ -68,12 +69,11 @@ public class ThriftyRentSystem {
 	 * @param //Scanner variable
 	 * @return adds either car or van if the details are correct
 	 */
-	private void add(Scanner scan) {
+	public void add(Scanner scan) {
+		String vehicleID;
+		String maintenanceDate;
 		int i = 0;
-		String vehicleID = "";
 		int seats = 0;
-		String maintenanceDate = null;
-		int perDayRent = 0;
 		System.out.print("Vehicle Type(Van or Car): ");
 		String vehicleType = scan.nextLine();
 		while (!(vehicleType.equalsIgnoreCase("car") || vehicleType.equalsIgnoreCase("van"))) {
@@ -136,7 +136,7 @@ public class ThriftyRentSystem {
 				System.out.println("Please enter a valid date in the format dd/mm/yyyy: ");
 				maintenanceDate = scan.nextLine();
 			}
-			String dateSplit[] = maintenanceDate.split("/");
+			String[] dateSplit = maintenanceDate.split("/");
 			DateTime Lastmain = new DateTime(Integer.parseInt(dateSplit[0]), Integer.parseInt(dateSplit[1]), Integer.parseInt(dateSplit[2]));
 			if (i < 50) {
 				Vehicle newVehicle = new Van(vehicleID, year, make, model, 0, new VehicleType(seats, Lastmain));
@@ -144,8 +144,6 @@ public class ThriftyRentSystem {
 				System.out.println(newVehicle.toString());
 			}
 		}
-
-
 	}
 
 
@@ -155,7 +153,7 @@ public class ThriftyRentSystem {
 	 * @param //Scanner variable
 	 * @return Rents a car or van if the details are correct
 	 */
-	private void rent(Scanner sc) {
+	public void rent(Scanner sc) {
 		System.out.print("Vehicle id: ");
 		String id = sc.nextLine();
 		String type = "";
@@ -259,33 +257,34 @@ public class ThriftyRentSystem {
 	 * @param //Scanner variable
 	 * @return prints the details of the car along with rental fee and charges if it is returned late
 	 */
-	private void returnCar(Scanner sc) {
+	public String returnCar(Scanner sc) {
+		String output = "";
 		System.out.print("VehicleId: ");
 		String id = sc.next();
 
 		if (this.cars[0] == null) {
 			System.out.println("There are no cars, please add cars.");
-			return;
+			return "There are no cars, please add cars.";
 		}
 		if (this.vans[0] == null) {
-			System.out.println("There are no vans, please add cars.");
-			return;
+			System.out.println("There are no vans, please add vans.");
+			return "There are no vans, please add vans.";
 		}
-		if (this.cars[0] != null && id.contains("C_")) {
+		if (id.contains("C_")) {
 
 			boolean flag = false;
 			for (int i = 0; this.cars[i] != null; i++) {
 
-				if ((this.cars[i].getVehicleId()).equals(id)) {
+				if (this.cars[i].getVehicleId().equals(id)) {
 					System.out.print("Return date( dd/mm/yyyy): ");
 					String date = sc.next();
 					String dates[] = date.split("/");
 					DateTime returnDate = new DateTime(Integer.parseInt(dates[0]), Integer.parseInt(dates[1]), Integer.parseInt(dates[2]));
 					if (this.cars[i].returnVehicle(returnDate)) {
-						System.out.println(this.cars[i].records[this.cars[i].getLastElementIndex()].getDetails());
+						output = this.cars[i].records[this.cars[i].getLastElementIndex()].getDetails();
 					} else {
 						System.out.println("Vehicle cannot be returned as it may have been never rented");
-						return;
+						return "Vehicle cannot be returned as it may have been never rented";
 					}
 					flag = true;
 					break;
@@ -294,10 +293,10 @@ public class ThriftyRentSystem {
 			}
 			if (!flag) {
 				System.out.println("Id is incorrect");
-				return;
+				return "Id is incorrect";
 			}
 		}
-		if (this.vans[0] != null && id.contains("V_")) {
+		if (id.contains("V_")) {
 			boolean flag = false;
 			for (int i = 0; this.vans[i] != null; i++) {
 				if ((this.vans[i].getVehicleId()).equals(id)) {
@@ -306,10 +305,10 @@ public class ThriftyRentSystem {
 					String dates[] = date.split("/");
 					DateTime returndate = new DateTime(Integer.parseInt(dates[0]), Integer.parseInt(dates[1]), Integer.parseInt(dates[2]));
 					if (this.vans[i].returnVehicle(returndate)) {
-						System.out.println(this.vans[i].records[this.vans[i].getLastElementIndex()].getDetails());
+						output = this.vans[i].records[this.vans[i].getLastElementIndex()].getDetails();
 					} else {
 						System.out.println("Vehicle cannot be returned");
-						return;
+						return "Vehicle cannot be returned";
 					}
 					flag = true;
 					break;
@@ -317,9 +316,10 @@ public class ThriftyRentSystem {
 			}
 			if (!flag) {
 				System.out.println("Id is incorrect");
-				return;
+				return "Id is incorrect";
 			}
 		}
+		return output;
 	}
 
 	/**

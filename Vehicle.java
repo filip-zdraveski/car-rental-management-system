@@ -11,10 +11,10 @@ public class Vehicle {
     protected String Model;
     protected int vehicleStatus;
     protected VehicleType vehicleType;
-    protected RentalRecord records[] = new RentalRecord[10];
+    protected RentalRecord[] records = new RentalRecord[10];
 
     // Constructor to accept the details of a vehicle
-    public Vehicle(String VehicleId, int Year, String Make, String Model, int status, VehicleType vehicleType) {
+    Vehicle(String VehicleId, int Year, String Make, String Model, int status, VehicleType vehicleType) {
         this.Vehicle_id = VehicleId;
         this.Year = Year;
         this.Make = Make;
@@ -42,7 +42,7 @@ public class Vehicle {
             typeOfVehicle = "car";
         else
             typeOfVehicle = "van";
-        if (this.vehicleStatus != 0 || numOfRentDay < this.vehicleType.canBeRentedForMinimumDays(rentDate, typeOfVehicle) || numOfRentDay >= 14 || numOfRentDay < 2) {
+        if (this.vehicleStatus != 0 || numOfRentDay < this.vehicleType.canBeRentedForMinimumDays(rentDate, typeOfVehicle) || numOfRentDay >= 14) {
             return false;
         } else if (typeOfVehicle.equals("van")) {
             if (this.vehicleStatus != 0 || this.vehicleType.IsUnderMaintenance(rentDate, typeOfVehicle, numOfRentDay) || numOfRentDay == 0)
