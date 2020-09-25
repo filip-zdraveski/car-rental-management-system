@@ -15,6 +15,11 @@ public class VehicleType {
         this.carSeats = seats;
     }
 
+    public VehicleType() {
+    }
+
+    ;
+
     //Constructor for Van type
     public VehicleType(int seats, DateTime LastMaintenance) {
         this.vanSeats = seats;
@@ -49,7 +54,7 @@ public class VehicleType {
     /**
      * method to get index from the days array
      */
-    private int indexOf(String day) {
+    public int indexOf(String day) {
         for (int index = 0; index < days.length; index++)
             if (days[index].equals(day))
                 return index;
@@ -74,10 +79,8 @@ public class VehicleType {
      * @param date,type checking which day the vehicle is being rented and setting minimum days it can be rented
      *                  method to check whether a vehicle can be rented for a specific number of days
      */
-    public int canBeRentedForMinimumDays(DateTime date, String type) {
-        if (this.indexOf(date.getNameOfDay()) + 1 <= 5 && this.indexOf(date.getNameOfDay()) + 1 >= 1 && type.equals("car")) {
-            return 2;
-        } else if (type.equals("car")) {
+    public int canBeRentedForMinimumDays(String type) {
+        if (type.equals("car")) {
             return 3;
         } else {
             return 1; //van can be rented only 1 day
@@ -90,14 +93,13 @@ public class VehicleType {
      */
     public boolean IsUnderMaintenance(DateTime rentDate, String type, int numOfRentDays) {
         DateTime nextMaintenance = new DateTime(this.LastMaintenance, 12);
-        if (type.equals("van") && DateTime.diffDays(nextMaintenance, new DateTime(rentDate, numOfRentDays)) >= 0 && numOfRentDays <= 12) {
+        if (type.equals("van") && numOfRentDays <= 12) {
+            return false;
+        } else if (type.equals("car")) {
             return false;
         }
-        if (type.equals("car")) {
-            return false;
-        } else {
-            return true;
-        }
+        return true;
+
     }
 }
 

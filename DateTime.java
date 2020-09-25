@@ -6,6 +6,7 @@ public class DateTime {
 
 	private long advance;
 	private long time;
+	Calendar calendar;
 
 	public DateTime() {
 		time = System.currentTimeMillis();
@@ -21,7 +22,7 @@ public class DateTime {
 		time = startDate.getTime() + advance;
 	}
 
-	public DateTime(int day, int month, int year) {
+	public DateTime(int day, int month, int year) throws Exception {
 		setDate(day, month, year);
 	}
 
@@ -69,11 +70,29 @@ public class DateTime {
 		long convertToDays = HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTES * MILLISECONDS_IN_SECOND;
 		long hirePeriod = endDate.getTime() - startDate.getTime();
 		double difference = (double) hirePeriod / (double) convertToDays;
-		int round = (int) Math.abs(Math.round(difference));
+		int round = (int) Math.round(difference);
 		return round;
 	}
 
-	private void setDate(int day, int month, int year) {
+	public Calendar setCalendar(int day, int month, int year) throws Exception {
+
+		if ((day == 29 && month == 2 && year % 4 != 0) || (day == 30 && month == 2) ||
+				(day == 31 && (month == 2 || month == 4 || month == 6 || month == 9 || month == 11)) ||
+				(month > 12 || month <= 0) || (day < 0 || day > 31) ||
+				(year < 2010 || year > 2020)) {
+			throw new InvalidDateException("Invalid date!");
+		}
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setLenient(false);
+		calendar.set(year, month, day, 0, 0, 0);
+//		java.util.Date date = calendar.getTime();
+//		time = date.getTime();
+		calendar.setTimeInMillis(0);
+		return calendar;
+	}
+
+	public void setDate(int day, int month, int year) {
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(year, month - 1, day, 0, 0);
@@ -82,6 +101,7 @@ public class DateTime {
 
 		time = date.getTime();
 	}
+
 
 	// Advances date/time by specified days, hours and mins for testing purposes
 	public void setAdvance(int days, int hours, int mins) {

@@ -18,14 +18,14 @@ public class ThriftyRentSystemTest {
     }
 
     @Test
-    public void test1() throws FileNotFoundException {
+    public void test1() throws Exception {
         File f = new File("test1.txt");
         String output = "There are no cars, please add cars.";
         assertEquals(output, thriftyRentSystem.returnCar(new Scanner(f)));
     }
 
     @Test
-    public void test2() throws FileNotFoundException {
+    public void test2() throws Exception {
         File f1 = new File("car.txt");
         thriftyRentSystem.add(new Scanner(f1));
         File f2 = new File("return-car.txt");
@@ -34,7 +34,7 @@ public class ThriftyRentSystemTest {
     }
 
     @Test
-    public void test3() throws FileNotFoundException {
+    public void test3() throws Exception {
         File f1 = new File("car.txt");
         thriftyRentSystem.add(new Scanner(f1));
         File f2 = new File("van.txt");
@@ -52,7 +52,7 @@ public class ThriftyRentSystemTest {
     }
 
     @Test
-    public void test4() throws FileNotFoundException {
+    public void test4() throws Exception {
         File f1 = new File("car.txt");
         thriftyRentSystem.add(new Scanner(f1));
         File f2 = new File("van.txt");

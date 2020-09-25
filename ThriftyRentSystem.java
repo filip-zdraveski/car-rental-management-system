@@ -19,7 +19,7 @@ public class ThriftyRentSystem {
 	 * This the method called from main method
 	 * this contains the menudriven interface to communicate with the user
 	 */
-	public void run() {
+	public void run() throws Exception {
 
 		while (true) {
 
@@ -69,7 +69,7 @@ public class ThriftyRentSystem {
 	 * @param //Scanner variable
 	 * @return adds either car or van if the details are correct
 	 */
-	public void add(Scanner scan) {
+	public void add(Scanner scan) throws Exception {
 		String vehicleID;
 		String maintenanceDate;
 		int i = 0;
@@ -153,7 +153,7 @@ public class ThriftyRentSystem {
 	 * @param //Scanner variable
 	 * @return Rents a car or van if the details are correct
 	 */
-	public void rent(Scanner sc) {
+	public void rent(Scanner sc) throws Exception {
 		System.out.print("Vehicle id: ");
 		String id = sc.nextLine();
 		String type = "";
@@ -257,7 +257,7 @@ public class ThriftyRentSystem {
 	 * @param //Scanner variable
 	 * @return prints the details of the car along with rental fee and charges if it is returned late
 	 */
-	public String returnCar(Scanner sc) {
+	public String returnCar(Scanner sc) throws Exception {
 		String output = "";
 		System.out.print("VehicleId: ");
 		String id = sc.next();
@@ -387,7 +387,7 @@ public class ThriftyRentSystem {
 	 * @param //Scanner variable
 	 * @return prints appropriate message after completing maintenance
 	 */
-	private void completeMaintenance(Scanner sc) {
+	private void completeMaintenance(Scanner sc) throws Exception {
 		System.out.print("Enter vehicle ID: ");
 		String id = sc.next();
 		if (this.cars[0] == null) {

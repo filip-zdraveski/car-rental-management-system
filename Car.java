@@ -7,7 +7,7 @@
  */
 public class Car extends Vehicle {
 
-
+    private CarService carService;
     private double rentRate = 78;
     private double lateFee;
     private int seats = 0;
@@ -17,6 +17,10 @@ public class Car extends Vehicle {
         seats = vehicleType.getCarSeats();
         if (seats == 7)
             rentRate = 113;
+    }
+
+    public void setCarService(CarService carService) {
+        this.carService = carService;
     }
 
     /**
@@ -49,7 +53,7 @@ public class Car extends Vehicle {
         if (this.vehicleStatus != 0) {
             DateTime estdate = this.records[this.getLastElementIndex()].getEstimatedReturnDate();
             DateTime rentDate = this.records[this.getLastElementIndex()].getRentDate();
-            if (vehicleType.equals("car") && DateTime.diffDays(returnDate, estdate) < 0 && DateTime.diffDays(returnDate, rentDate) < this.vehicleType.canBeRentedForMinimumDays(rentDate, vehicleType)) {
+            if (vehicleType.equals("car") && DateTime.diffDays(returnDate, estdate) < 0 && DateTime.diffDays(returnDate, rentDate) < this.vehicleType.canBeRentedForMinimumDays(vehicleType)) {
                 return false;
             } else {
 

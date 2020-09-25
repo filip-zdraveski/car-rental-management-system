@@ -12,6 +12,11 @@ public class RentalRecord extends DateTime {
         this.EstimatedReturnDate = EstimatedReturnDate;
     }
 
+    public RentalRecord() {
+    }
+
+    ;
+
     public void setData(DateTime ActualDate, Double RentalFee, Double LateFee) {
         this.ActualReturnDate = ActualDate;
         this.RentalFee = RentalFee;
